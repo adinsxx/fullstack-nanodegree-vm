@@ -35,8 +35,20 @@ def newBeerName(brewery_id):
 # Task 2: Create route for editMenuItem function here
 
 
-@app.route('/brewery/<int:brewery_id>/<int:beer_id>/edit/')
+@app.route('/brewery/<int:brewery_id>/<int:beer_id>/edit/', methods=['GET', 'POST'])
 def editBeerName(brewery_id, beer_id):
+    editedBeer = session.query(BeerName).filter_by(id=beer_id).one()
+    if request.method == 'POST':
+        if request.form['name']:
+            editedItem.name = request.form['name']
+        session.add(editedItem)
+        session.commit()
+        return redirect(url_for('breweryMenu', brewery_id=brewery_id))
+    else:
+        # USE THE RENDER_TEMPLATE FUNCTION BELOW TO SEE THE VARIABLES YOU
+        # SHOULD USE IN YOUR EDITMENUITEM TEMPLATE
+        return render_template(
+            'editmenuitem.html', brewery_id=brewery_id, beer_id=beer_id, beer=editedBeer)
     return "page to edit a menu item. Task 2 complete!"
 
 # Task 3: Create a route for deleteMenuItem function here
