@@ -1,6 +1,6 @@
 <html>
 <body>
-<form action= "{{url_for('editBeerName', brewery_id = brewery_id, menu_id=beer.id)}}" method = 'POST'>
+<form action= "{{url_for('editBeerName', brewery_id = brewery_id, beer_id=beer.id)}}" method = 'POST'>
 
 <p>Name:</p>
 <input type = 'text' size='30' name = 'name' placeholder = '{{beer.name}}'>

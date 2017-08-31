@@ -27,6 +27,16 @@ class BeerName(Base):
         Integer, ForeignKey('brewery.id'))
     brewery = relationship(Brewery)
 
+    @property
+    def serialize(self):
+        return {
+            'name' : self.name,
+            'description' : self.description,
+            'id' : self.id,
+            'price' : self.price,
+            'type' : self.type,
+        }
+
 #######################
 engine = create_engine('sqlite:///beer.db')
 Base.metadata.create_all(engine)

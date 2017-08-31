@@ -1,13 +1,29 @@
 <html>
 <head>
-	<title></title>
+    <title></title>
 </head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='skeleton.css')}}">
     <body>
     <h1>{{ brewery.name }}</h1>
+    <a href="{{url_for('newBeerName', brewery_id=brewery.id)}}">Create New Beer</a>
+
+
+            {% with messages = get_flashed_messages() %}
+        {% if messages %}
+
+            <ul>
+            {% for message in messages %}
+                <li><strong> {{ message }} </strong></li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+        {% endwith %}
+        
 
     {% for i in beers %}
-    
+
     <div>
+
     <p>{{i.name}}</p>
     <p>{{i.description}}</p>
     <p>{{i.price}}</p>
