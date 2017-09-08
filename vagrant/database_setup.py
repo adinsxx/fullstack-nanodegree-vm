@@ -5,6 +5,13 @@ from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 Base = declarative_base()
 
+class User(Base):
+    __tablename__ = 'user'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+    email = Column(String(250), nullable=False)
+    picture = Column(String(250))
 
 class Brewery(Base):
     __tablename__ = 'brewery'
@@ -12,6 +19,17 @@ class Brewery(Base):
         String(80), nullable=False)
     id = Column(
         Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
+
+    @property
+    def serialize(self):
+        return {
+            'name' : self.name,
+            'id' : self.id,
+            'user_id' : self.user_id,
+            'user' : self.user
+        }
 
 
 class BeerName(Base):
@@ -26,6 +44,8 @@ class BeerName(Base):
     brewery_id = Column(
         Integer, ForeignKey('brewery.id'))
     brewery = relationship(Brewery)
+    user_id = Column(Integer, ForeignKey('user.id'))
+    user = relationship(User)
 
     @property
     def serialize(self):
@@ -35,8 +55,10 @@ class BeerName(Base):
             'id' : self.id,
             'price' : self.price,
             'type' : self.type,
+            'user_id' : self.user_id,
+            'user' : self.user
         }
 
 #######################
-engine = create_engine('sqlite:///beer.db')
+engine = create_engine('sqlite:///beerwithusers.db')
 Base.metadata.create_all(engine)
