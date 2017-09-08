@@ -22,7 +22,7 @@ CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "favoritebeerslist"
 
-engine = create_engine('sqlite:///beer.db')
+engine = create_engine('sqlite:///beerwithusers.db')
 text_factory = str
 Base.metadata.bind = engine
 
