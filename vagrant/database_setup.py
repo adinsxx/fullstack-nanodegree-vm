@@ -27,8 +27,7 @@ class Brewery(Base):
         return {
             'name' : self.name,
             'id' : self.id,
-            'user_id' : self.user_id,
-            'user' : self.user
+            'user_id' : self.user_id
         }
 
 
@@ -55,8 +54,7 @@ class BeerName(Base):
             'id' : self.id,
             'price' : self.price,
             'type' : self.type,
-            'user_id' : self.user_id,
-            'user' : self.user
+            'user_id' : self.user_id
         }
 
 #######################

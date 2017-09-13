@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
-app = Flask(__name__)
 
 from database_setup import Brewery, BeerName, Base, User
 from sqlalchemy import create_engine
@@ -16,6 +15,9 @@ import httplib2
 import json
 from flask import make_response
 import requests
+from functools import wraps
+
+app = Flask(__name__)
 
 
 CLIENT_ID = json.loads(
@@ -29,6 +31,13 @@ Base.metadata.bind = engine
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'username' not in login_session:
+            return redirect('/login')
+        return f(*args, **kwargs)
+    return decorated_function
 
 @app.route('/login')
 def showLogin():
@@ -268,8 +277,8 @@ def showBreweries():
 
 @app.route('/brewery/new/', methods=['GET', 'POST'])
 def newBrewery():
-    if 'username' not in login_session:
-        return redirect('/login')
+    # if 'username' not in login_session:
+    #     return redirect('/login')
     if request.method == 'POST':
         newBrewery = Brewery(name=request.form['name'], user_id=login_session['user_id'])
         session.add(newBrewery)
@@ -281,8 +290,8 @@ def newBrewery():
 
 @app.route('/brewery/<int:brewery_id>/edit', methods=['GET', 'POST'])
 def editBrewery(brewery_id):
-    if 'username' not in login_session:
-        return redirect('/login')
+    # if 'username' not in login_session:
+    #     return redirect('/login')
     editedBrewery = session.query(
         Brewery).filter_by(id=brewery_id).one()
     if request.method == 'POST':
@@ -297,8 +306,8 @@ def editBrewery(brewery_id):
 def deleteBrewery(brewery_id):
     breweryToDelete = session.query(
         Brewery).filter_by(id=brewery_id).one()
-    if 'username' not in login_session:
-        return redirect('/login')
+    # if 'username' not in login_session:
+    #     return redirect('/login')
     if breweryToDelete.user_id != login_session['user_id']:
         return "<script>function myFunction() {alert('You are not authorized to delete this restaurant. Please create your own restaurant in order to delete.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
@@ -327,8 +336,8 @@ def breweryMenu(brewery_id):
 
 @app.route('/brewery/<int:brewery_id>/menu/new/', methods=['GET', 'POST'])
 def newBeerName(brewery_id):
-    if 'username' not in login_session:
-        return redirect('/login')
+    # if 'username' not in login_session:
+    #     return redirect('/login')
     brewery = session.query(Brewery).filter_by(id=brewery_id).one()
     if request.method == 'POST':
         newBeer = BeerName(name=request.form['name'], description=request.form['description'], price=request.form['price'], brewery_id=brewery_id, user_id=brewery.user_id)
@@ -348,8 +357,8 @@ def newBeerName(brewery_id):
         'GET',
         'POST'])
 def editBeerName(brewery_id, beer_id):
-    if 'username' not in login_session:
-        return redirect('/login')
+    # if 'username' not in login_session:
+    #     return redirect('/login')
     editedBeer = session.query(BeerName).filter_by(id=beer_id).one()
     if request.method == 'POST':
         if request.form['name']:
@@ -380,8 +389,8 @@ def editBeerName(brewery_id, beer_id):
         'GET',
         'POST'])
 def deleteBeerName(brewery_id, beer_id):
-    if 'username' not in login_session:
-        return redirect('/login')
+    # if 'username' not in login_session:
+    #     return redirect('/login')
     brewery = session.query(Brewery).filter_by(id=brewery_id).one()
     beerToDelete = session.query(BeerName).filter_by(id=beer_id).one()
     if request.method == 'POST':
