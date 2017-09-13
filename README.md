@@ -6,11 +6,14 @@
 <p>I decided to create an app similar to that of Untapp'd, but that you simply just add your own favorite beers/breweries. Follow the instructions below to run it locally!</p>
 
 <h1>Instructions</h1>
-<p>Install Vagrant and VirtualBox
-Clone the fullstack-nanodegree-vm
-Launch the Vagrant VM (vagrant up)
-Write your Flask application locally in the vagrant/catalog directory (which will automatically be synced to /vagrant/catalog within the VM).
-Run your application within the VM (python /vagrant/catalog/application.py)
-Access and test your application by visiting http://localhost:8000 locally
-
-and that should do it!</p>
+<p>
+<ul>
+<li>Install Vagrant and VirtualBox</li>
+<li>Clone the fullstack-nanodegree-vm</li>
+<li>Launch the Vagrant VM (vagrant up)</li>
+<li>Write your Flask application locally in the vagrant/catalog directory (which will automatically be synced to /vagrant/catalog within the VM).</li>
+<li>Run your application within the VM (python /vagrant/catalog/application.py)</li>
+<li>Access and test your application by visiting http://localhost:8000 locally</li>
+</ul>
+and that should do it!
+</p>
