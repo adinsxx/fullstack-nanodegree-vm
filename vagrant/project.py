@@ -106,6 +106,7 @@ def gconnect():
         return response
 
     # Store the access token in the session for later use.
+    login_session['proivder] = 'google'
     login_session['access_token'] = credentials.access_token
     login_session['gplus_id'] = gplus_id
 
@@ -194,6 +195,7 @@ def fbconnect():
     access_token = request.data
 
     app_id = json.loads(open('fb_client_secrets.json', 'r').read())['web']['app_secret']
+    #FIX THIS UNRESOLVED REFERENCE TO APP_SECRET
     url = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s' % (app_id,app_secret,access_token)
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
@@ -276,6 +278,7 @@ def showBreweries():
         return render_template('breweries.html', breweries=breweries)
 
 @app.route('/brewery/new/', methods=['GET', 'POST'])
+@login_required
 def newBrewery():
     # if 'username' not in login_session:
     #     return redirect('/login')
@@ -289,6 +292,7 @@ def newBrewery():
         return render_template('newBrewery.html')
 
 @app.route('/brewery/<int:brewery_id>/edit', methods=['GET', 'POST'])
+@login_required
 def editBrewery(brewery_id):
     # if 'username' not in login_session:
     #     return redirect('/login')
@@ -303,6 +307,7 @@ def editBrewery(brewery_id):
         return render_template('editBrewery.html', brewery=editedBrewery)
 
 @app.route('/brewery/<int:brewery_id>/delete/', methods=['GET', 'POST'])
+@login_required
 def deleteBrewery(brewery_id):
     breweryToDelete = session.query(
         Brewery).filter_by(id=brewery_id).one()
@@ -335,6 +340,7 @@ def breweryMenu(brewery_id):
 
 
 @app.route('/brewery/<int:brewery_id>/menu/new/', methods=['GET', 'POST'])
+@login_required
 def newBeerName(brewery_id):
     # if 'username' not in login_session:
     #     return redirect('/login')
@@ -356,6 +362,7 @@ def newBeerName(brewery_id):
     methods=[
         'GET',
         'POST'])
+@login_required
 def editBeerName(brewery_id, beer_id):
     # if 'username' not in login_session:
     #     return redirect('/login')
@@ -388,6 +395,7 @@ def editBeerName(brewery_id, beer_id):
     methods=[
         'GET',
         'POST'])
+@login_required
 def deleteBeerName(brewery_id, beer_id):
     # if 'username' not in login_session:
     #     return redirect('/login')
