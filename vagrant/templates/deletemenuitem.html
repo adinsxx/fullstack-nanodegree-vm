@@ -1,6 +1,6 @@
 {% extends "main.html" %} 
 {% block content %} 
-{% include "header.html" % }
+{% include "header.html" %}
 <h1>Are you sure you want to delete {{beer.name}}?</h1>
 
 <form action="{{ url_for('deleteBeerName', brewery_id=beer.brewery_id, beer_id=beer.id)}}" method='post'>
