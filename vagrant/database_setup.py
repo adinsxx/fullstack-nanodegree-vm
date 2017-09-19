@@ -21,6 +21,7 @@ class Brewery(Base):
         Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
+    beer_name = relationship('BeerName', cascade='all, delete-orphan')
 
     @property
     def serialize(self):
