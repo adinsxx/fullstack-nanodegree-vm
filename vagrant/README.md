@@ -11,9 +11,9 @@
 <li>Install Vagrant and VirtualBox</li>
 <li>Clone the fullstack-nanodegree-vm</li>
 <li>Launch the Vagrant VM (vagrant up)</li>
-<li>Write your Flask application locally in the vagrant/catalog directory (which will automatically be synced to /vagrant/catalog within the VM).</li>
-<li>Run your application within the VM (python /vagrant/catalog/application.py)</li>
-<li>Access and test your application by visiting http://localhost:8000 locally</li>
+<li>Write your Flask application locally in the vagrant directory (which will automatically be synced to /vagrant within the VM).</li>
+<li>Run your application within the VM (python /vagrant/application.py)</li>
+<li>Access and test your application by visiting http://localhost:5000 locally</li>
 </ul>
 and that should do it!
 </p>
