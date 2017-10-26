@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from database_setup import Brewery, BeerName, Base, User
 
 # Sets up the database
-engine = create_engine('sqlite:///beerwithusers.db')
+engine = create_engine('postgres://svymsdhuczbetf:89fa6e925141ea7471c235b6695ee5bfe823a3339658c10f79b22ebeadd9b570@ec2-54-243-58-69.compute-1.amazonaws.com:5432/dbltor7fnb7jee')
 text_factory = str
 Base.metadata.bind = engine
 # Creates the session
